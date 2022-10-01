@@ -1,0 +1,103 @@
+﻿@inject IJSRuntime JsRuntime
+@inject NavigationManager NavManager
+@inject StateContainer StateContainer
+
+
+@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<EditForm id="@signatureForm" Model="StateContainer.SignatureApproved" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+
+            <h1>Agreement</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et ante vehicula, pretium sem nec, venenatis elit. Ut magna orci, fermentum tristique semper id, malesuada id lectus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec quis quam ante. Ut vel hendrerit nisi. Etiam nisi purus, ultrices eu neque nec, aliquam auctor erat. Aliquam dignissim massa lacus, at varius purus porttitor non. In vel semper sapien.
+            </p>
+            <p>
+                Nam ut venenatis nisi. Nam vel diam massa. Ut varius dignissim urna, scelerisque elementum erat tincidunt quis. Proin turpis urna, lacinia id quam vitae, feugiat accumsan est. Fusce aliquet ex quis orci accumsan placerat. Curabitur eget eros arcu. Morbi id bibendum dolor. Curabitur eget elementum nulla. Quisque ultricies ac enim ut accumsan. Ut eu consequat ex. Praesent vel mi malesuada mi interdum convallis. Nulla blandit ligula non pulvinar faucibus. Quisque accumsan eu quam nec feugiat.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <ValidationSummary />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <label>Print Your Name:</label>
+            <InputText @bind-Value="StateContainer.SignatureApproved.PrintedName" class="form-control" />
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <label>Signature Date:</label>
+            <InputDate @bind-Value="StateContainer.SignatureApproved.SignatureDate" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="alert alert-danger @signatureAlert">Signature Required.</div>
+            <label>Please Sign Below:</label><br />
+            <canvas id="signature-pad" class="signature-pad border" @ref="_canvas"></canvas>
+        </div>
+        <input type="hidden" @bind="StateContainer.SignatureApproved.Signature" />
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <a id="clear-signature" class="btn btn-light border">Clear</a>
+        </div>
+    </div>
+</EditForm>
+
+
+<div class="row my-5 text-right">
+    <div class="col-sm-12 col-md-6">
+        <button type="submit" form="@signatureForm" class="btn btn-primary form-control">Submit</button>
+    </div>
+</div>
+
+
+@code {
+    public ElementReference _canvas;
+    private string signatureForm = "signatureForm";
+    private string saveSignature { get; set; }
+    private string noSignature { get; set; }
+    private string signatureAlert { get; set; }
+
+    private async Task<string> GetSignature()
+    {
+        return await JsRuntime.InvokeAsync<string>("getImageData", _canvas);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        saveSignature = await GetSignature();
+        if (string.Equals(saveSignature, noSignature))
+        {
+            signatureAlert = "visible";
+            StateHasChanged();
+            return;
+        }
+
+        StateContainer.SignatureApproved.Signature = saveSignature;
+        NavManager.NavigateTo("/Review");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            noSignature = await JsRuntime.InvokeAsync<string>("setSignature", _canvas);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (StateContainer.SignatureApproved == null)
+            StateContainer.SignatureApproved = new SignatureApproved();
+
+        signatureAlert = "invisible";
+    }
+}

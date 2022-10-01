@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "signature_pad@4.0.9",
+      "destination": "wwwroot/lib/signature_pad/"
+    }
+  ]
+}

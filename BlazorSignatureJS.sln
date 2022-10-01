@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32804.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSignatureJS", "BlazorSignatureJS\BlazorSignatureJS.csproj", "{29288D0D-0E2A-4CBE-8595-93AE11C7109B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29288D0D-0E2A-4CBE-8595-93AE11C7109B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29288D0D-0E2A-4CBE-8595-93AE11C7109B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29288D0D-0E2A-4CBE-8595-93AE11C7109B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29288D0D-0E2A-4CBE-8595-93AE11C7109B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A406933-F23D-4583-8007-4F3304C0590E}
+	EndGlobalSection
+EndGlobal

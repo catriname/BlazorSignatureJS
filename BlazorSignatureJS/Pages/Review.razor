@@ -1,0 +1,36 @@
+﻿@inject IJSRuntime JsRuntime
+@inject NavigationManager NavManager
+@inject StateContainer StateContainer
+
+@page "/Review"
+
+<PageTitle>Review</PageTitle>
+<EditForm Model="StateContainer.SignatureApproved">
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+
+            <h1>Agreement</h1>
+            <p>
+                I, <span class="fw-bold">@StateContainer.SignatureApproved.PrintedName</span>, consectetur adipiscing elit. Aenean et ante vehicula, pretium sem nec, venenatis elit. Ut magna orci, fermentum tristique semper id, malesuada id lectus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec quis quam ante. Ut vel hendrerit nisi. Etiam nisi purus, ultrices eu neque nec, aliquam auctor erat. Aliquam dignissim massa lacus, at varius purus porttitor non. In vel semper sapien.
+            </p>
+            <p>
+                Nam ut venenatis nisi. Nam vel diam massa. Ut varius dignissim urna, scelerisque elementum erat tincidunt quis. Proin turpis urna, lacinia id quam vitae, feugiat accumsan est. Fusce aliquet ex quis orci accumsan placerat. Curabitur eget eros arcu. Morbi id bibendum dolor. Curabitur eget elementum nulla. Quisque ultricies ac enim ut accumsan. Ut eu consequat ex. Praesent vel mi malesuada mi interdum convallis. Nulla blandit ligula non pulvinar faucibus. Quisque accumsan eu quam nec feugiat.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <label>Signed:</label><br />
+            <img src="@StateContainer.SignatureApproved.Signature">
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <label>Dated:</label>
+            <InputDate @bind-Value="StateContainer.SignatureApproved.SignatureDate" class="form-control disabled" />
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+}
